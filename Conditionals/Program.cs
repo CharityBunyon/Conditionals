@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Reflection.Metadata.Ecma335;
 using System.Security.Cryptography.X509Certificates;
+using System.Text;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks.Dataflow;
@@ -14,86 +16,56 @@ namespace Conditionals
     {
         static void Main(string[] arg)
         {
-            var names = new List<string>() { "Mark", "Luke", "John" };
-            names.Add("Charity");
-            names.AddRange(new string[3] {"Kate", "Sam", "Aries"});
+           /* var fullName = "Charity Bunyon ";
+            Console.WriteLine($"Trim {fullName.Trim()}");
+            Console.WriteLine($"ToUpper {fullName.Trim().ToUpper()}");
 
-            foreach (var name in names)
-            {
-                Console.WriteLine(name);
-            }
+            var index = fullName.IndexOf(' ');
+            var firstName = fullName.Substring(0, index);
+            var lastName = fullName.Substring(index + 1);
+            Console.WriteLine($"Firstname: {firstName}");
+            Console.WriteLine($"Lastname: {lastName}");
 
-            Console.WriteLine(names.IndexOf("John"));
+            var names = fullName.Split(' ');
+            Console.WriteLine($"Firstname: {names[0]}");
+            Console.WriteLine($"Lastname: {names[1]}");
 
-            Console.WriteLine(names.LastIndexOf("John"));
+            Console.WriteLine(fullName.Replace("Charity", "Chanel"));
+            if (String.IsNullOrWhiteSpace(" "))
+                Console.WriteLine("Invalid");
 
-            Console.WriteLine(names.Count);
+            var str = "25";
+            Console.WriteLine(int.Parse(str));
+            var age = Convert.ToByte(str);
+            Console.WriteLine(age);
 
-            for (var i = 0; i < names.Count; i++)
-            {
-                if (names[i] == "Charity")
-                {
-                    names.Remove(names[1]);
-                }
-            }
-            foreach (var name in names)
-            {
-                Console.WriteLine(name);
-            }
+            float price = 29.95f;
+            Console.WriteLine(price.ToString("C0"));
 
-            names.Clear();
-            Console.WriteLine(names.Count);
+            var sentence = "Hey. Welcome to my really really really really, no but really its really really long.";
+            var summary = StringUtlility.SummarizeText(sentence, 25);
+            Console.WriteLine(summary);
+*/
+           var builder = new StringBuilder("Hello World");
+           builder
+               .Append('-', 10)
+               .AppendLine()
+               .Append("Header")
+               .AppendLine()
+               .Append('-', 10);
 
+           builder.Replace('-', '+');
 
-            // Exercises
+           builder.Remove(0, 10);
 
-            //Write a program and continuously ask the user to enter different names, until the user presses Enter (without supplying a name).
-            //Depending on the number of names provided, display a message based on the above pattern.
+           builder.Insert(0, new string('-', 10));
+           Console.WriteLine(builder);
 
-            var firstnames = new List<string>();
-            while (true)
-            {
-                Console.Write("Type a name or hit Enter to quit: ");
-                var response = Console.ReadLine();
-                if (String.IsNullOrWhiteSpace(response))
-                    break;
-                firstnames.Add(response);
-            }
+           Console.WriteLine(builder[0]);
 
 
-            var addLikes = true;
-          
-            Console.WriteLine("Enter 'y' to like Charity's post or 'no' to not like her post.");
-            var likedOrNot = Console.ReadLine();
-            if (likedOrNot.Equals("n", StringComparison.OrdinalIgnoreCase))
-            {
-                Console.WriteLine("Hopefully, I make better content for you next time.");
-                likedOrNot = Console.ReadLine();
-            }
 
-            while (addLikes)
-            {
-                if (likedOrNot.Equals("y", StringComparison.OrdinalIgnoreCase ) && firstnames.Count <= 0)
-                {
-                    Console.WriteLine("No one liked your post.");
-                    likedOrNot= Console.ReadLine();
-                    break;
-                }else if (likedOrNot.Equals("y", StringComparison.OrdinalIgnoreCase) && firstnames.Count == 1)
-                {
-                    Console.WriteLine($"{firstnames[0]} likes Charity's post.");
-                    break;
-                }else if (likedOrNot.Equals("y", StringComparison.OrdinalIgnoreCase) && firstnames.Count == 2)
-                {
-                    Console.WriteLine($"{firstnames[0]} & {firstnames[1]} likes Charity's post.");
-                    break;
-                }
-                else if (likedOrNot.Equals("y", StringComparison.OrdinalIgnoreCase) && firstnames.Count > 2)
-                {
-                    Console.WriteLine($"{firstnames[0]} & {firstnames[1]} & {firstnames.Count - 2} likes Charity's post.");
-                    break;
-
-                }
-            }
         }
+
     }
 }
