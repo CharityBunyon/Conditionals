@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
@@ -13,49 +14,85 @@ namespace Conditionals
     {
         static void Main(string[] arg)
         {
-            //Learning array methods
+            var names = new List<string>() { "Mark", "Luke", "John" };
+            names.Add("Charity");
+            names.AddRange(new string[3] {"Kate", "Sam", "Aries"});
 
-            var numbers = new int[] {3, 7, 9, 2, 14, 6};
-
-            //Length- checks the length of an array, but Count() is a LINQ extension that does the same on an IEnumerable
-            Console.WriteLine($"Length of numbers array is " +numbers.Length);
-
-            //IndexOf()- first param asks for the array name and then the value that you want to find the index of
-            var index = Array.IndexOf(numbers, 9);
-            Console.WriteLine("Index of this array is " + index);
-
-            // Clear() - method that taking in the name of the array, the starting index of where you want objects to be cleared, and the length
-            Array.Clear(numbers, 0, 2);
-
-            Console.Write("Effect of Clear()");
-            foreach (var num in numbers)
-                Console.WriteLine(num); 
-
-            // Copy()- takes 3 params- the array you want to copy, the array you want to copy it to, and the length of the area
-            int[] another = new int[3];
-            Array.Copy(numbers, another, 3);
-
-            Console.WriteLine("Effect of Copy()");
-            foreach (var num in another)
+            foreach (var name in names)
             {
-                Console.WriteLine(num);
-            }
-            
-
-            // Sort()- pass in the array to sort (has several versions) 
-            Array.Sort(numbers);
-            Console.WriteLine("Effect of Sort()");
-            foreach (var num in numbers)
-            {
-                Console.WriteLine(num);
+                Console.WriteLine(name);
             }
 
-            //Reverse() - Reverses the order of elements in a list
-            Array.Reverse(numbers);
-            Console.WriteLine("Effect of Reverse");
-            foreach (var num in numbers)
+            Console.WriteLine(names.IndexOf("John"));
+
+            Console.WriteLine(names.LastIndexOf("John"));
+
+            Console.WriteLine(names.Count);
+
+            for (var i = 0; i < names.Count; i++)
             {
-                Console.WriteLine(num);
+                if (names[i] == "Charity")
+                {
+                    names.Remove(names[1]);
+                }
+            }
+            foreach (var name in names)
+            {
+                Console.WriteLine(name);
+            }
+
+            names.Clear();
+            Console.WriteLine(names.Count);
+
+
+            // Exercises
+
+            //Write a program and continuously ask the user to enter different names, until the user presses Enter (without supplying a name).
+            //Depending on the number of names provided, display a message based on the above pattern.
+
+            var firstnames = new List<string>();
+            while (true)
+            {
+                Console.Write("Type a name or hit Enter to quit: ");
+                var response = Console.ReadLine();
+                if (String.IsNullOrWhiteSpace(response))
+                    break;
+                firstnames.Add(response);
+            }
+
+
+            var addLikes = true;
+          
+            Console.WriteLine("Enter 'y' to like Charity's post or 'no' to not like her post.");
+            var likedOrNot = Console.ReadLine();
+            if (likedOrNot.Equals("n", StringComparison.OrdinalIgnoreCase))
+            {
+                Console.WriteLine("Hopefully, I make better content for you next time.");
+                likedOrNot = Console.ReadLine();
+            }
+
+            while (addLikes)
+            {
+                if (likedOrNot.Equals("y", StringComparison.OrdinalIgnoreCase ) && firstnames.Count <= 0)
+                {
+                    Console.WriteLine("No one liked your post.");
+                    likedOrNot= Console.ReadLine();
+                    break;
+                }else if (likedOrNot.Equals("y", StringComparison.OrdinalIgnoreCase) && firstnames.Count == 1)
+                {
+                    Console.WriteLine($"{firstnames[0]} likes Charity's post.");
+                    break;
+                }else if (likedOrNot.Equals("y", StringComparison.OrdinalIgnoreCase) && firstnames.Count == 2)
+                {
+                    Console.WriteLine($"{firstnames[0]} & {firstnames[1]} likes Charity's post.");
+                    break;
+                }
+                else if (likedOrNot.Equals("y", StringComparison.OrdinalIgnoreCase) && firstnames.Count > 2)
+                {
+                    Console.WriteLine($"{firstnames[0]} & {firstnames[1]} & {firstnames.Count - 2} likes Charity's post.");
+                    break;
+
+                }
             }
         }
     }
